@@ -1,4 +1,3 @@
-// src/pages/HomePage.tsx
 import React from "react";
 import PostList from "../components/organisms/PostList";
 import Button from "../components/atoms/Button";
