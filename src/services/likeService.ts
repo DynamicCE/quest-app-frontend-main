@@ -1,21 +1,18 @@
 import api from "../api/api";
 import { handleError } from "../utils/handleError";
 
-export const getComments = async (postId: number) => {
+export const likePost = async (postId: number) => {
   try {
-    const response = await api.get(`/posts/${postId}/comments`);
+    const response = await api.post(`/posts/${postId}/like`);
     return response.data;
   } catch (error) {
     throw new Error(handleError(error));
   }
 };
 
-export const createComment = async (commentData: {
-  postId: number;
-  content: string;
-}) => {
+export const likeComment = async (commentId: number) => {
   try {
-    const response = await api.post("/comments", commentData);
+    const response = await api.post(`/comments/${commentId}/like`);
     return response.data;
   } catch (error) {
     throw new Error(handleError(error));

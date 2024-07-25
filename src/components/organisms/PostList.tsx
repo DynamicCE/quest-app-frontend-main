@@ -1,10 +1,12 @@
-// src/components/organisms/PostList.tsx
 import React, { useState, useEffect } from "react";
 import { getPosts } from "../../services/postService";
+import PostItem from "../molecules/PostItem";
 
 interface Post {
+  id: number;
   title: string;
   text: string;
+  author: string;
 }
 
 const PostList: React.FC = () => {
@@ -34,10 +36,14 @@ const PostList: React.FC = () => {
   } else {
     return (
       <ul>
-        {postList.map((post, index) => (
-          <li key={index}>
-            {post.title} {post.text}
-          </li>
+        {postList.map((post) => (
+          <PostItem
+            key={post.id}
+            id={post.id}
+            title={post.title}
+            text={post.text}
+            author={post.author}
+          />
         ))}
       </ul>
     );

@@ -9,3 +9,34 @@ export const getPosts = async () => {
     throw new Error(handleError(error));
   }
 };
+
+export const createPost = async (postData: { title: string; text: string }) => {
+  try {
+    const response = await api.post("/posts", postData);
+    return response.data;
+  } catch (error) {
+    throw new Error(handleError(error));
+  }
+};
+
+export const getPostById = async (postId: number) => {
+  try {
+    const response = await api.get(`/posts/${postId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(handleError(error));
+  }
+};
+
+export const updatePost = async (postData: {
+  postId: number;
+  title: string;
+  text: string;
+}) => {
+  try {
+    const response = await api.put(`/posts/${postData.postId}`, postData);
+    return response.data;
+  } catch (error) {
+    throw new Error(handleError(error));
+  }
+};

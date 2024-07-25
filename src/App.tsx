@@ -1,15 +1,9 @@
-import React from 'react';
+// src/App.tsx
+import React from "react";
+import Routes from "./routes/Routes";
 
 const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-      </header>
-    </div>
-  );
-}
+  return <Routes />;
+};
 
 export default App;
