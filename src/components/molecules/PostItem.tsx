@@ -20,6 +20,7 @@ const PostItem: React.FC<PostProps> = ({
   authorProfilePic,
   likes,
 }) => {
+  console.log(Comment);
   return (
     <div className="post-item">
       <div className="post-header">

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getPosts } from "../../services/postService";
 import PostItem from "../molecules/PostItem";
-import "../molecules/PostItem.css";
-
+import "../molecules/PostList.css";
 interface Post {
   id: number;
   title: string;
@@ -21,7 +20,7 @@ const PostList: React.FC = () => {
     const fetchPosts = async () => {
       try {
         const result = await getPosts();
-        console.log(result); // Veriyi burada kontrol edin
+        console.log(result);
         setPostList(result);
       } catch (error) {
         setError(error as Error);

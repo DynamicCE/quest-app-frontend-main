@@ -13,7 +13,7 @@ const HomePage: React.FC = () => {
 
   return (
     <div>
-      <Navbar /> {/* Navbar bileşeni kullanıldı */}
+      <Navbar />
       <header>
         <h1>QuestApp</h1>
         <Button label="Yeni Post Oluştur" onClick={handleCreatePost} />

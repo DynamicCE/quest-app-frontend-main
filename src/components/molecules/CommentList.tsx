@@ -1,52 +1,31 @@
-// src/components/molecules/CommentList.tsx
-import React, { useState, useEffect } from "react";
-import { getComments } from "../../services/commentService";
-import CommentItem, { CommentItemProps } from "./CommentItem";
+import React from "react";
+import CommentItem from "../molecules/CommentItem";
 
-interface CommentListProps {
+interface Comment {
+  id: number;
+  text: string;
+  userId: number;
   postId: number;
 }
 
-const CommentList: React.FC<CommentListProps> = ({ postId }) => {
-  const [comments, setComments] = useState<CommentItemProps[]>([]);
-  const [error, setError] = useState<Error | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+interface CommentListProps {
+  comments: Comment[];
+}
 
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const result = await getComments(postId);
-        setComments(result);
-      } catch (error) {
-        setError(error as Error);
-      } finally {
-        setIsLoaded(true);
-      }
-    };
-
-    fetchComments();
-  }, [postId]);
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  } else if (!isLoaded) {
-    return <div>Loading...</div>;
-  } else {
-    return (
-      <ul>
-        {comments.map((comment) => (
-          <CommentItem
-            key={comment.id}
-            id={comment.id}
-            author={comment.author}
-            content={comment.content}
-            authorProfilePic={comment.authorProfilePic}
-            likes={comment.likes}
-          />
-        ))}
-      </ul>
-    );
+const CommentList: React.FC<CommentListProps> = ({ comments }) => {
+  if (!Array.isArray(comments)) {
+    return <div>Yorumlar yüklenirken bir hata oluştu.</div>;
   }
+
+  return (
+    <div>
+      {comments.length === 0 ? (
+        <div>No comments available.</div>
+      ) : (
+        comments.map((comment) => <CommentItem key={comment.id} {...comment} />)
+      )}
+    </div>
+  );
 };
 
 export default CommentList;
