@@ -1,17 +1,15 @@
 import React from "react";
 
-interface CommentProps {
+interface CommentItemProps {
   author: string;
   content: string;
 }
 
-const CommentItem: React.FC<CommentProps> = ({ author, content }) => {
+const CommentItem: React.FC<CommentItemProps> = ({ author, content }) => {
   return (
-    <div className="comment-item">
-      <p>
-        <strong>{author}:</strong> {content}
-      </p>
-    </div>
+    <li>
+      <strong>{author}:</strong> {content}
+    </li>
   );
 };
 
