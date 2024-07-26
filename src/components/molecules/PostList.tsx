@@ -21,6 +21,7 @@ const PostList: React.FC = () => {
     const fetchPosts = async () => {
       try {
         const result = await getPosts();
+        console.log(result); // Veriyi burada kontrol edin
         setPostList(result);
       } catch (error) {
         setError(error as Error);
@@ -36,10 +37,12 @@ const PostList: React.FC = () => {
     return <div>Error: {error.message}</div>;
   } else if (!isLoaded) {
     return <div>Loading...</div>;
+  } else if (postList.length === 0) {
+    return <div>No posts available.</div>;
   } else {
     return (
-      <div className="post-list-container">
-        <ul className="post-list">
+      <div className="post-list">
+        <ul>
           {postList.map((post) => (
             <PostItem
               key={post.id}

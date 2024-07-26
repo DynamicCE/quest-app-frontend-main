@@ -4,7 +4,12 @@ import { handleError } from "../utils/handleError";
 export const getPosts = async () => {
   try {
     const response = await api.get("/posts");
-    return response.data;
+    console.log(response.data); // Veriyi kontrol edin
+    if (Array.isArray(response.data.data)) {
+      return response.data.data;
+    } else {
+      throw new Error("Beklenmeyen veri formatı: Bir dizi bekleniyordu.");
+    }
   } catch (error) {
     throw new Error(handleError(error));
   }
