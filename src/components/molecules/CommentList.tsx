@@ -1,19 +1,14 @@
+// src/components/molecules/CommentList.tsx
 import React, { useState, useEffect } from "react";
 import { getComments } from "../../services/commentService";
-import CommentItem from "../molecules/CommentItem";
-
-interface Comment {
-  id: number;
-  author: string;
-  content: string;
-}
+import CommentItem, { CommentItemProps } from "./CommentItem";
 
 interface CommentListProps {
   postId: number;
 }
 
 const CommentList: React.FC<CommentListProps> = ({ postId }) => {
-  const [comments, setComments] = useState<Comment[]>([]);
+  const [comments, setComments] = useState<CommentItemProps[]>([]);
   const [error, setError] = useState<Error | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -42,8 +37,11 @@ const CommentList: React.FC<CommentListProps> = ({ postId }) => {
         {comments.map((comment) => (
           <CommentItem
             key={comment.id}
+            id={comment.id}
             author={comment.author}
             content={comment.content}
+            authorProfilePic={comment.authorProfilePic}
+            likes={comment.likes}
           />
         ))}
       </ul>

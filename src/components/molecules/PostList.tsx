@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { getPosts } from "../../services/postService";
-import PostItem from "../molecules/PostItem";
-
-interface Post {
-  id: number;
-  title: string;
-  text: string;
-  author: string;
-}
+import PostItem, { PostProps } from "../molecules/PostItem";
 
 const PostList: React.FC = () => {
   const [error, setError] = useState<Error | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [postList, setPostList] = useState<Post[]>([]);
+  const [postList, setPostList] = useState<PostProps[]>([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -43,6 +36,8 @@ const PostList: React.FC = () => {
             title={post.title}
             text={post.text}
             author={post.author}
+            authorProfilePic={post.authorProfilePic}
+            likes={post.likes}
           />
         ))}
       </ul>
