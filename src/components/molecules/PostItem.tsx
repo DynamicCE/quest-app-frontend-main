@@ -1,6 +1,7 @@
 import React from "react";
 import CommentList from "../organisms/CommentList";
 import LikeButton from "../atoms/LikeButton";
+import "./PostItem.css"; // CSS dosyasını dahil edin
 
 export interface PostProps {
   id: number;

@@ -36,3 +36,24 @@
     transform: rotate(360deg);
   }
 }
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
+  padding: 16px;
+}
+
+h1,
+h2 {
+  color: #fff;
+}

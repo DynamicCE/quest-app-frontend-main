@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { getPosts } from "../../services/postService";
-import PostItem, { PostProps } from "../molecules/PostItem";
+import PostItem from "../molecules/PostItem";
+import "./PostList.css";
+
+interface Post {
+  id: number;
+  title: string;
+  text: string;
+  author: string;
+  authorProfilePic: string;
+  likes: number;
+}
 
 const PostList: React.FC = () => {
   const [error, setError] = useState<Error | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [postList, setPostList] = useState<PostProps[]>([]);
+  const [postList, setPostList] = useState<Post[]>([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -28,19 +38,21 @@ const PostList: React.FC = () => {
     return <div>Loading...</div>;
   } else {
     return (
-      <ul>
-        {postList.map((post) => (
-          <PostItem
-            key={post.id}
-            id={post.id}
-            title={post.title}
-            text={post.text}
-            author={post.author}
-            authorProfilePic={post.authorProfilePic}
-            likes={post.likes}
-          />
-        ))}
-      </ul>
+      <div className="post-list-container">
+        <ul className="post-list">
+          {postList.map((post) => (
+            <PostItem
+              key={post.id}
+              id={post.id}
+              title={post.title}
+              text={post.text}
+              author={post.author}
+              authorProfilePic={post.authorProfilePic}
+              likes={post.likes}
+            />
+          ))}
+        </ul>
+      </div>
     );
   }
 };

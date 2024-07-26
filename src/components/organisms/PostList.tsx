@@ -7,6 +7,8 @@ interface Post {
   title: string;
   text: string;
   author: string;
+  authorProfilePic: string;
+  likes: number;
 }
 
 const PostList: React.FC = () => {
@@ -43,6 +45,8 @@ const PostList: React.FC = () => {
             title={post.title}
             text={post.text}
             author={post.author}
+            authorProfilePic={post.authorProfilePic}
+            likes={post.likes}
           />
         ))}
       </ul>
