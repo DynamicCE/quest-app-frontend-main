@@ -2,15 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getPosts } from "../../services/postService";
 import PostItem from "./PostItem";
 import "./PostList.css";
-
-interface Post {
-  id: number;
-  title: string;
-  text: string;
-  author: string;
-  authorProfilePic: string;
-  likes: number;
-}
+import { Post } from "../../types/types";
 
 const PostList: React.FC = () => {
   const [error, setError] = useState<Error | null>(null);
@@ -52,6 +44,7 @@ const PostList: React.FC = () => {
               author={post.author}
               authorProfilePic={post.authorProfilePic}
               likes={post.likes}
+              comments={post.comments || []}
             />
           ))}
         </ul>

@@ -1,11 +1,15 @@
 import React from "react";
-import CommentItem from "../molecules/CommentItem";
+import CommentItem from "./CommentItem";
 
 interface Comment {
   id: number;
   text: string;
   userId: number;
   postId: number;
+  author: string;
+  content: string;
+  authorProfilePic: string;
+  likes: number;
 }
 
 interface CommentListProps {
@@ -22,7 +26,16 @@ const CommentList: React.FC<CommentListProps> = ({ comments }) => {
       {comments.length === 0 ? (
         <div>No comments available.</div>
       ) : (
-        comments.map((comment) => <CommentItem key={comment.id} {...comment} />)
+        comments.map((comment) => (
+          <CommentItem
+            key={comment.id}
+            id={comment.id}
+            author={comment.author}
+            content={comment.content}
+            authorProfilePic={comment.authorProfilePic}
+            likes={comment.likes}
+          />
+        ))
       )}
     </div>
   );

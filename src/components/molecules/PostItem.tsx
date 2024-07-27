@@ -1,15 +1,27 @@
 import React from "react";
-import CommentList from "../organisms/CommentList";
+import CommentList from "./CommentList";
 import LikeButton from "../atoms/LikeButton";
-import "./PostItem.css"; // CSS dosyasını dahil edin
+import "./PostItem.css";
 
-export interface PostProps {
+interface Comment {
+  id: number;
+  text: string;
+  userId: number;
+  postId: number;
+  author: string;
+  content: string;
+  authorProfilePic: string;
+  likes: number;
+}
+
+interface PostProps {
   id: number;
   title: string;
   text: string;
   author: string;
   authorProfilePic: string;
   likes: number;
+  comments: Comment[];
 }
 
 const PostItem: React.FC<PostProps> = ({
@@ -19,8 +31,10 @@ const PostItem: React.FC<PostProps> = ({
   author,
   authorProfilePic,
   likes,
+  comments,
 }) => {
-  console.log(Comment);
+  console.log(comments);
+
   return (
     <div className="post-item">
       <div className="post-header">
@@ -37,7 +51,7 @@ const PostItem: React.FC<PostProps> = ({
         <LikeButton itemId={id} isPost={true} />
         <span>{likes} likes</span>
       </div>
-      <CommentList postId={id} />
+      <CommentList comments={comments || []} />{" "}
     </div>
   );
 };
