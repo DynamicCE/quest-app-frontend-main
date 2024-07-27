@@ -1,0 +1,14 @@
+.home-page {
+  padding: 40px 0;
+}
+
+.home-title {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+
+.post-list {
+  display: grid;
+  gap: 20px;
+}
