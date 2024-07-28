@@ -17,7 +17,9 @@ const HomePage: React.FC = () => {
       <Navbar />
       <header className="home-header">
         <h1 className="home-title">QuestApp</h1>
-        <Button label="Yeni Post Oluştur" onClick={handleCreatePost} />
+        <div className="create-post-button">
+          <Button label="Yeni Post Oluştur" onClick={handleCreatePost} />
+        </div>
       </header>
       {showForm && <PostForm />}
       <PostList />

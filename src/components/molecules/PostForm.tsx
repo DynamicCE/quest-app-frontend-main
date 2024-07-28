@@ -1,4 +1,3 @@
-// src/components/molecules/PostForm.tsx
 import React, { useState } from "react";
 import { createPost } from "../../services/postService";
 import "./PostForm.css";
@@ -15,7 +14,7 @@ const PostForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="post-form" onSubmit={handleSubmit}>
       <input
         type="text"
         value={title}
