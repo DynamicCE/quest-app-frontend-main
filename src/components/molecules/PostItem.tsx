@@ -33,25 +33,44 @@ const PostItem: React.FC<PostProps> = ({
   likes,
   comments,
 }) => {
-  console.log(comments);
-
   return (
     <div className="post-item">
       <div className="post-header">
-        <img
-          src={authorProfilePic}
-          alt={`${author}'s profile`}
-          className="profile-pic"
-        />
+        {authorProfilePic ? (
+          <img
+            src={authorProfilePic}
+            alt={`${author}'s profile`}
+            className="profile-pic"
+          />
+        ) : (
+          <span className="profile-placeholder">undefined's profile</span>
+        )}
         <h2>{title}</h2>
-        <p>Author: {author}</p>
+        {author ? (
+          <p className="post-author">Author: {author}</p>
+        ) : (
+          <span className="author-placeholder">Author: undefined</span>
+        )}
       </div>
-      <p>{text}</p>
+      <p className="post-content">{text}</p>
       <div className="post-footer">
         <LikeButton itemId={id} isPost={true} />
-        <span>{likes} likes</span>
+        <div className="post-actions">
+          <button className="action-button like-button">
+            <i className="fa fa-heart"></i>
+          </button>
+          <button className="action-button comment-button">
+            <i className="fa fa-comment"></i>
+          </button>
+          <button className="action-button share-button">
+            <i className="fa fa-paper-plane"></i>
+          </button>
+          <button className="action-button save-button">
+            <i className="fa fa-bookmark"></i>
+          </button>
+        </div>
       </div>
-      <CommentList comments={comments || []} />{" "}
+      <CommentList comments={comments || []} />
     </div>
   );
 };
