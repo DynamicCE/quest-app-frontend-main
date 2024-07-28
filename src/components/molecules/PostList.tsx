@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getPosts } from "../../services/postService";
-import PostItem from "./PostItem";
+import PostItem from "../molecules/PostItem"; // PostItem'ı doğru yerden import edin
 import "./PostList.css";
 import { Post } from "../../types/types";
 
@@ -45,6 +45,7 @@ const PostList: React.FC = () => {
               authorProfilePic={post.authorProfilePic}
               likes={post.likes}
               comments={post.comments || []}
+              createdAt={post.createdAt}
             />
           ))}
         </ul>

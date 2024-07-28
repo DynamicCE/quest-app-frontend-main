@@ -9,6 +9,7 @@ export interface Comment {
   content: string;
   authorProfilePic: string;
   likes: number;
+  createdAt: string;
 }
 
 export interface Post {
@@ -19,4 +20,5 @@ export interface Post {
   authorProfilePic: string;
   likes: number;
   comments: Comment[];
+  createdAt: string;
 }
