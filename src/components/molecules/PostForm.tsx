@@ -1,6 +1,7 @@
 // src/components/molecules/PostForm.tsx
 import React, { useState } from "react";
 import { createPost } from "../../services/postService";
+import "./PostForm.css";
 
 const PostForm: React.FC = () => {
   const [title, setTitle] = useState("");
