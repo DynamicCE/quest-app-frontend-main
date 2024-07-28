@@ -2,8 +2,12 @@
   background-color: var(--surface-color);
   border-radius: 8px;
   padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease;
+}
+
+.post-item:hover {
+  transform: translateY(-5px);
 }
 
 .post-header {
@@ -36,8 +40,9 @@
   font-size: 14px;
   display: flex;
   align-items: center;
+  transition: color 0.3s;
 }
 
 .like-button:hover {
-  text-decoration: underline;
+  color: var(--secondary-color);
 }

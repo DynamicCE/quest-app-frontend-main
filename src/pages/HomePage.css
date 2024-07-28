@@ -6,9 +6,5 @@
   font-size: 32px;
   margin-bottom: 20px;
   color: var(--primary-color);
-}
-
-.post-list {
-  display: grid;
-  gap: 20px;
+  text-align: center;
 }

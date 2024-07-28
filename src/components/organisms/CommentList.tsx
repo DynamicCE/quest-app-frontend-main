@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getComments } from "../../services/commentService";
-
+import "./CommentList.css";
 interface Comment {
   author: string;
   content: string;

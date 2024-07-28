@@ -1,17 +1,6 @@
-/* src/components/molecules/PostList.css */
 .post-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.post-list ul {
-  list-style-type: none;
-  padding: 0;
-  width: 100%;
-  max-width: 600px;
-}
-
-.comment-list {
-  margin-top: 16px;
+  display: grid;
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
 }
