@@ -3,17 +3,7 @@ import CommentList from "./CommentList";
 import LikeButton from "../atoms/LikeButton";
 import { format } from "date-fns";
 import "./PostItem.css";
-
-interface Comment {
-  id: number;
-  text: string;
-  userId: number;
-  postId: number;
-  author: string;
-  content: string;
-  authorProfilePic: string;
-  likes: number;
-}
+import { Comment } from "../../types/types";
 
 interface PostProps {
   id: number;
@@ -23,7 +13,7 @@ interface PostProps {
   authorProfilePic: string;
   likes: number;
   comments: Comment[];
-  createdAt: string; // createdAt özelliğini ekledik
+  createdAt: string; // createdAt alanı tanımlı
 }
 
 const PostItem: React.FC<PostProps> = ({
@@ -36,6 +26,10 @@ const PostItem: React.FC<PostProps> = ({
   comments,
   createdAt,
 }) => {
+  const formattedDate = createdAt
+    ? format(new Date(createdAt), "dd/MM/yyyy HH:mm")
+    : "Invalid date";
+
   return (
     <div className="post-item">
       <div className="post-header">
@@ -54,9 +48,7 @@ const PostItem: React.FC<PostProps> = ({
         ) : (
           <span className="author-placeholder">Author: undefined</span>
         )}
-        <p className="post-date">
-          {format(new Date(createdAt), "dd/MM/yyyy HH:mm")}
-        </p>
+        <p className="post-date">{formattedDate}</p>
       </div>
       <p className="post-content">{text}</p>
       <div className="post-footer">

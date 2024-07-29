@@ -1,16 +1,7 @@
 import React from "react";
 import CommentItem from "./CommentItem";
-
-interface Comment {
-  id: number;
-  text: string;
-  userId: number;
-  postId: number;
-  author: string;
-  content: string;
-  authorProfilePic: string;
-  likes: number;
-}
+// type dosyasını import
+import { Comment } from "../../types/types";
 
 interface CommentListProps {
   comments: Comment[];

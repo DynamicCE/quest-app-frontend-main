@@ -10,7 +10,7 @@ export const getPosts = async (): Promise<Post[]> => {
       return response.data.data.content.map((post: Post) => ({
         ...post,
         comments: Array.isArray(post.comments) ? post.comments : [],
-        createdAt: post.createdAt,
+        createdAt: post.createdAt || new Date().toISOString(),
       }));
     } else {
       throw new Error("Beklenmeyen veri formatı: Bir dizi bekleniyordu.");
