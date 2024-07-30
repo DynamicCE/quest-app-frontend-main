@@ -68,11 +68,14 @@ const PostItem: React.FC<PostItemProps> = ({ post, onPostUpdated }) => {
     }
   };
 
-  const handleCommentSubmit = async (comment: Comment) => {
+  const handleCommentSubmit = async (newComment: Comment) => {
     try {
-      await createComment({ postId: post.id, content: comment.content });
-      const updatedComments = await getComments(post.id);
-      setComments(updatedComments);
+      const createdComment = await createComment({
+        postId: post.id,
+        content: newComment.content,
+      });
+      setComments((prevComments) => [...prevComments, createdComment]);
+      showNotification("Yorum başarıyla eklendi.");
     } catch (error) {
       console.error("Error adding comment:", error);
       showNotification("Yorum eklenirken bir hata oluştu.");
@@ -129,7 +132,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, onPostUpdated }) => {
               <CommentList comments={comments} />
               <CommentForm
                 postId={post.id}
-                onCommentSubmit={handleCommentSubmit}
+                onCommentSubmit={handleCommentSubmit} // Bu satır güncellendi
               />
             </>
           )}

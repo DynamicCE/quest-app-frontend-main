@@ -22,7 +22,8 @@ const CommentForm: React.FC<CommentFormProps> = ({
       setContent("");
       setError(null);
     } catch (err) {
-      setError((err as Error).message);
+      console.error("Error creating comment:", err);
+      setError("Yorum eklenirken bir hata oluştu. Lütfen tekrar deneyin.");
     }
   };
 
