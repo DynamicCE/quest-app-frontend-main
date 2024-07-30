@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { format } from "date-fns";
 import { likePost, sharePost, savePost } from "../../services/postService";
+import { getComments } from "../../services/commentService";
 import CommentForm from "../molecules/CommentForm";
+import CommentList from "../organisms/CommentList";
 import "./PostItem.css";
-import { Comment, Post, User } from "../../types/types";
+import { Comment, Post } from "../../types/types";
 
 interface PostItemProps {
   post: Post;
@@ -13,7 +15,10 @@ interface PostItemProps {
 const PostItem: React.FC<PostItemProps> = ({ post, onPostUpdated }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(post.likes);
-  const [showCommentForm, setShowCommentForm] = useState(false);
+  const [showComments, setShowComments] = useState(false);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [notification, setNotification] = useState<string | null>(null);
+  const [isLoadingComments, setIsLoadingComments] = useState(false);
 
   const formattedDate = format(new Date(post.createdAt), "dd/MM/yyyy HH:mm");
 
@@ -21,8 +26,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, onPostUpdated }) => {
     try {
       await likePost(post.id);
       setIsLiked(!isLiked);
-      setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);
-      onPostUpdated();
+      setLikeCount((prevCount) => (isLiked ? prevCount - 1 : prevCount + 1));
     } catch (error) {
       console.error("Error liking post:", error);
     }
@@ -31,26 +35,46 @@ const PostItem: React.FC<PostItemProps> = ({ post, onPostUpdated }) => {
   const handleShare = async () => {
     try {
       await sharePost(post.id);
-      alert("Post shared successfully!");
+      showNotification("Post başarıyla paylaşıldı!");
     } catch (error) {
       console.error("Error sharing post:", error);
+      showNotification("Post paylaşılırken bir hata oluştu.");
     }
   };
 
   const handleSave = async () => {
     try {
       await savePost(post.id);
-      alert("Post saved successfully!");
+      showNotification("Post başarıyla kaydedildi!");
     } catch (error) {
       console.error("Error saving post:", error);
+      showNotification("Post kaydedilirken bir hata oluştu.");
     }
   };
 
-  const handleCommentSubmit = (comment: string) => {
-    // Implement comment submission logic
-    console.log("Comment submitted:", comment);
-    setShowCommentForm(false);
-    onPostUpdated();
+  const handleCommentClick = async () => {
+    setShowComments(!showComments);
+    if (!showComments && comments.length === 0) {
+      setIsLoadingComments(true);
+      try {
+        const fetchedComments = await getComments(post.id);
+        setComments(fetchedComments);
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+        showNotification("Yorumlar yüklenirken bir hata oluştu.");
+      } finally {
+        setIsLoadingComments(false);
+      }
+    }
+  };
+
+  const handleCommentSubmit = (newComment: Comment) => {
+    setComments([...comments, newComment]);
+  };
+
+  const showNotification = (message: string) => {
+    setNotification(message);
+    setTimeout(() => setNotification(null), 3000);
   };
 
   return (
@@ -76,13 +100,10 @@ const PostItem: React.FC<PostItemProps> = ({ post, onPostUpdated }) => {
           <i className={`${isLiked ? "fas" : "far"} fa-heart`}></i>
           {likeCount > 0 && <span className="like-count">{likeCount}</span>}
         </button>
-        <button
-          className="action-button"
-          onClick={() => setShowCommentForm(!showCommentForm)}
-        >
+        <button className="action-button" onClick={handleCommentClick}>
           <i className="far fa-comment"></i>
-          {post.comments.length > 0 && (
-            <span className="comment-count">{post.comments.length}</span>
+          {comments.length > 0 && (
+            <span className="comment-count">{comments.length}</span>
           )}
         </button>
         <button className="action-button" onClick={handleShare}>
@@ -92,9 +113,22 @@ const PostItem: React.FC<PostItemProps> = ({ post, onPostUpdated }) => {
           <i className="far fa-bookmark"></i>
         </button>
       </div>
-      {showCommentForm && (
-        <CommentForm postId={post.id} onCommentSubmit={handleCommentSubmit} />
+      {showComments && (
+        <div className="comments-section">
+          {isLoadingComments ? (
+            <p>Yorumlar yükleniyor...</p>
+          ) : (
+            <>
+              <CommentList comments={comments} />
+              <CommentForm
+                postId={post.id}
+                onCommentSubmit={handleCommentSubmit}
+              />
+            </>
+          )}
+        </div>
       )}
+      {notification && <div className="notification">{notification}</div>}
     </div>
   );
 };
