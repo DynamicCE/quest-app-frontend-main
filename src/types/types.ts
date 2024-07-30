@@ -27,4 +27,5 @@ export interface Post {
   likes: number;
   comments: Comment[];
   createdAt: string;
+  status: string;
 }
