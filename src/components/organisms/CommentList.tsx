@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { getComments } from "../../services/commentService";
-import "./CommentList.css";
 import { Comment } from "../../types/types";
 
 interface CommentListProps {
