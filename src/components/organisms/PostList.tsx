@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getPosts } from "../../services/postService";
 import PostItem from "../molecules/PostItem";
-import "../molecules/PostList.css";
+import "./PostList.css";
 import { Post } from "../../types/types";
 
 const PostList: React.FC = () => {
@@ -34,7 +34,16 @@ const PostList: React.FC = () => {
     return (
       <div className="post-list">
         {postList.map((post) => (
-          <PostItem key={post.id} {...post} />
+          <PostItem
+            key={post.id}
+            id={post.id}
+            title={post.title}
+            text={post.text}
+            user={post.user}
+            likes={post.likes}
+            comments={post.comments || []}
+            createdAt={post.createdAt}
+          />
         ))}
       </div>
     );

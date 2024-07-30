@@ -5,7 +5,7 @@ export interface Comment {
   postId: number;
   author: string;
   content: string;
-  authorProfilePic: string;
+  profilePicture?: string;
   likes: number;
   createdAt: string;
 }

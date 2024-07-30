@@ -1,13 +1,23 @@
 import React, { useState } from "react";
 import { format } from "date-fns";
 import "./PostItem.css";
-import { Comment, Post } from "../../types/types";
+import { Comment, User } from "../../types/types";
 
-const PostItem: React.FC<Post> = ({
+interface PostProps {
+  id: number;
+  title: string;
+  text: string;
+  user: User;
+  likes: number;
+  comments: Comment[];
+  createdAt: string;
+}
+
+const PostItem: React.FC<PostProps> = ({
   id,
   title,
   text,
-  user, // 'author' yerine 'user' kullanıyoruz
+  user,
   likes,
   comments,
   createdAt,
@@ -49,7 +59,27 @@ const PostItem: React.FC<Post> = ({
       </div>
       <h2 className="post-title">{title}</h2>
       <p className="post-content">{text}</p>
-      {/* Diğer kısımlar aynı kalabilir */}
+      <div className="post-actions">
+        <button
+          className={`action-button ${isLiked ? "liked" : ""}`}
+          onClick={handleLike}
+        >
+          <i className={`${isLiked ? "fas" : "far"} fa-heart`}></i>
+          {likeCount > 0 && <span className="like-count">{likeCount}</span>}
+        </button>
+        <button className="action-button">
+          <i className="far fa-comment"></i>
+          {comments.length > 0 && (
+            <span className="comment-count">{comments.length}</span>
+          )}
+        </button>
+        <button className="action-button">
+          <i className="far fa-paper-plane"></i>
+        </button>
+        <button className="action-button">
+          <i className="far fa-bookmark"></i>
+        </button>
+      </div>
     </div>
   );
 };
