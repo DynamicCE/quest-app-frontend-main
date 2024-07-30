@@ -13,7 +13,7 @@ const ProfilePage: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+  const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -24,9 +24,10 @@ const ProfilePage: React.FC = () => {
           setPosts(userPosts);
         }
       } catch (err) {
+        console.error("Error fetching user data:", err);
         setError("Failed to load user data");
       } finally {
-        setIsLoading(false);
+        setIsLoaded(true);
       }
     };
     fetchUserData();
