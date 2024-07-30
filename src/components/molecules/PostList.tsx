@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getPosts } from "../../services/postService";
-import PostItem from "../molecules/PostItem"; // Doğru import edildiğinden emin olun
+import PostItem from "../molecules/PostItem";
 import "./PostList.css";
 import { Post } from "../../types/types";
 
@@ -33,21 +33,19 @@ const PostList: React.FC = () => {
   } else {
     return (
       <div className="post-list">
-        <ul>
-          {postList.map((post) => (
-            <PostItem
-              key={post.id}
-              id={post.id}
-              title={post.title}
-              text={post.text}
-              author={post.author}
-              authorProfilePic={post.authorProfilePic}
-              likes={post.likes}
-              comments={post.comments || []}
-              createdAt={post.createdAt} // Bu satırı ekleyin
-            />
-          ))}
-        </ul>
+        {postList.map((post) => (
+          <PostItem
+            key={post.id}
+            id={post.id}
+            title={post.title}
+            text={post.text}
+            author={post.author}
+            authorProfilePic={post.authorProfilePic}
+            likes={post.likes}
+            comments={post.comments || []}
+            createdAt={post.createdAt}
+          />
+        ))}
       </div>
     );
   }

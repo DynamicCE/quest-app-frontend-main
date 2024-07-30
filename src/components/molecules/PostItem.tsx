@@ -1,6 +1,4 @@
-import React from "react";
-import CommentList from "./CommentList";
-import LikeButton from "../atoms/LikeButton";
+import React, { useState } from "react";
 import { format } from "date-fns";
 import "./PostItem.css";
 import { Comment } from "../../types/types";
@@ -9,11 +7,11 @@ interface PostProps {
   id: number;
   title: string;
   text: string;
-  author: string;
-  authorProfilePic: string;
+  author?: string;
+  authorProfilePic?: string;
   likes: number;
   comments: Comment[];
-  createdAt: string; // createdAt alanı tanımlı
+  createdAt: string;
 }
 
 const PostItem: React.FC<PostProps> = ({
@@ -26,48 +24,64 @@ const PostItem: React.FC<PostProps> = ({
   comments,
   createdAt,
 }) => {
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(likes);
+
   const formattedDate = createdAt
     ? format(new Date(createdAt), "dd/MM/yyyy HH:mm")
     : "Invalid date";
 
+  const handleLike = () => {
+    if (isLiked) {
+      setLikeCount(likeCount - 1);
+    } else {
+      setLikeCount(likeCount + 1);
+    }
+    setIsLiked(!isLiked);
+  };
+
   return (
     <div className="post-item">
       <div className="post-header">
-        {authorProfilePic ? (
-          <img
-            src={authorProfilePic}
-            alt={`${author}'s profile`}
-            className="profile-pic"
-          />
-        ) : (
-          <span className="profile-placeholder">undefined's profile</span>
-        )}
-        <h2>{title}</h2>
-        {author ? (
-          <p className="post-author">Author: {author}</p>
-        ) : (
-          <span className="author-placeholder">Author: undefined</span>
-        )}
-        <p className="post-date">{formattedDate}</p>
-      </div>
-      <p className="post-content">{text}</p>
-      <div className="post-footer">
-        <div className="post-actions">
-          <button className="action-button like-button">
-            <i className="fa fa-heart"></i>
-          </button>
-          <button className="action-button comment-button">
-            <i className="fa fa-comment"></i>
-          </button>
-          <button className="action-button share-button">
-            <i className="fa fa-paper-plane"></i>
-          </button>
-          <button className="action-button save-button">
-            <i className="fa fa-bookmark"></i>
-          </button>
+        <div className="post-author">
+          {authorProfilePic ? (
+            <img
+              src={authorProfilePic}
+              alt={`${author || "Anonymous"}'s profile`}
+              className="profile-pic"
+            />
+          ) : (
+            <div className="profile-placeholder">
+              {author ? author.charAt(0) : "A"}
+            </div>
+          )}
+          <span>{author || "Anonymous"}</span>
         </div>
+        <span className="post-date">{formattedDate}</span>
       </div>
-      <CommentList comments={comments || []} />
+      <h2 className="post-title">{title}</h2>
+      <p className="post-content">{text}</p>
+      <div className="post-actions">
+        <button
+          className={`action-button ${isLiked ? "liked" : ""}`}
+          onClick={handleLike}
+        >
+          <i className={`${isLiked ? "fas" : "far"} fa-heart`}></i>
+          {likeCount > 0 && <span className="like-count">{likeCount}</span>}
+        </button>
+        <button className="action-button">
+          <i className="far fa-comment"></i>
+          {comments.length > 0 && (
+            <span className="comment-count">{comments.length}</span>
+          )}
+        </button>
+        <button className="action-button">
+          <i className="far fa-paper-plane"></i>
+        </button>
+        <button className="action-button">
+          <i className="far fa-bookmark"></i>
+        </button>
+      </div>
     </div>
   );
 };
