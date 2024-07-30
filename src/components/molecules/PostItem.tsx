@@ -2,18 +2,9 @@ import React, { useState } from "react";
 import { format } from "date-fns";
 import "./PostItem.css";
 import { Comment, User } from "../../types/types";
+import { Post } from "../../types/types";
 
-interface PostProps {
-  id: number;
-  title: string;
-  text: string;
-  user: User;
-  likes: number;
-  comments: Comment[];
-  createdAt: string;
-}
-
-const PostItem: React.FC<PostProps> = ({
+const PostItem: React.FC<Post> = ({
   id,
   title,
   text,

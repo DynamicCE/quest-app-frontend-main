@@ -1,19 +1,33 @@
 import api from "../api/api";
 import { handleError } from "../utils/handleError";
-import type { Post } from "../types/types";
+import type { Post, PagedResult } from "../types/types";
 
-export const getPosts = async (): Promise<Post[]> => {
+export const getPosts = async (): Promise<PagedResult<Post>> => {
   try {
     const response = await api.get("/posts");
     if (Array.isArray(response.data.data.content)) {
-      return response.data.data.content.map((post: any) => ({
-        ...post,
-        user: post.user || { username: "Anonymous" }, // 'user' alanını kullanıyoruz
-        comments: Array.isArray(post.comments) ? post.comments : [],
-        createdAt: post.createdAt || new Date().toISOString(),
-      }));
+      return {
+        items: [],
+        content: response.data.data.content.map((post: any) => ({
+          ...post,
+          user: post.user || { username: "Anonymous" },
+          comments: Array.isArray(post.comments) ? post.comments : [],
+          createdAt: post.createdAt || new Date().toISOString(),
+        })),
+        totalPages: response.data.data.totalPages || 0,
+        totalElements: response.data.data.totalElements || 0,
+        size: response.data.data.size || 0, // Add this line
+        number: response.data.data.number || 0, // Add this line
+      };
     } else {
-      throw new Error("Beklenmeyen veri formatı: Bir dizi bekleniyordu.");
+      return {
+        items: [],
+        content: [],
+        totalPages: 0,
+        totalElements: 0,
+        size: 0, // Add this line
+        number: 0, // Add this line
+      };
     }
   } catch (error) {
     console.error("Error fetching posts:", error);

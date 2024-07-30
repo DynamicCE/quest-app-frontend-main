@@ -27,5 +27,13 @@ export interface Post {
   likes: number;
   comments: Comment[];
   createdAt: string;
-  status: string;
+}
+
+export interface PagedResult<T> {
+  items: Post[];
+  content: T[];
+  totalPages: number;
+  totalElements: number;
+  size: number;
+  number: number;
 }

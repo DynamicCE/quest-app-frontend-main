@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getPosts } from "../../services/postService";
 import PostItem from "../molecules/PostItem";
 import "./PostList.css";
-import { Post } from "../../types/types";
+import { PagedResult, Post } from "../../types/types";
 
 const PostList: React.FC = () => {
   const [error, setError] = useState<Error | null>(null);
@@ -12,8 +12,9 @@ const PostList: React.FC = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const result = await getPosts();
-        setPostList(result);
+        const result: PagedResult<Post> = await getPosts();
+        const posts: Post[] = result.items;
+        setPostList(posts);
       } catch (error) {
         setError(error as Error);
       } finally {
