@@ -22,8 +22,8 @@ const HomePage: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await getPosts();
-      setPosts(response.content);
+      const posts = await getPosts();
+      setPosts(posts);
     } catch (error) {
       console.error("Error fetching posts:", error);
       setError(
