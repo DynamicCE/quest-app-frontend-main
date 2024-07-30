@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getUserById } from "../services/userService";
+import { getUserById, getUserStats } from "../services/userService";
 import { getPostsByUserId } from "../services/postService";
 import PostList from "../components/organisms/PostList";
 import Navbar from "../components/organisms/Navbar";
+import UserStats from "../components/molecules/UserStats";
 import { Post, User } from "../types/types";
 import "./ProfilePage.css";
 
@@ -13,7 +14,7 @@ const ProfilePage: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -27,11 +28,15 @@ const ProfilePage: React.FC = () => {
         console.error("Error fetching user data:", err);
         setError("Failed to load user data");
       } finally {
-        setIsLoaded(true);
+        setIsLoading(false);
       }
     };
     fetchUserData();
   }, [userId]);
+
+  const handlePostUpdated = () => {
+    // Implement post update logic if needed
+  };
 
   if (isLoading) {
     return <div className="loading">Loading...</div>;
@@ -63,14 +68,9 @@ const ProfilePage: React.FC = () => {
             </p>
           </div>
         </div>
-        <div className="profile-stats">
-          <div className="stat">
-            <span className="stat-value">{posts.length}</span>
-            <span className="stat-label">Posts</span>
-          </div>
-        </div>
+        <UserStats userId={user.id} />
         <h2>Posts</h2>
-        <PostList />
+        <PostList posts={posts} onPostUpdated={handlePostUpdated} />
       </div>
     </div>
   );

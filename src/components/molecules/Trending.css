@@ -1,0 +1,27 @@
+.trending {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+
+.trending .topic {
+  background-color: #f0f0f0;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.trending .topic:hover {
+  background-color: #e0e0e0;
+}
+
+.trending .topic .title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.trending .topic .count {
+  font-size: 14px;
+}

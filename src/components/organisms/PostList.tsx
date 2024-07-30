@@ -1,54 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { getPosts } from "../../services/postService";
+import React from "react";
 import PostItem from "../molecules/PostItem";
-import "./PostList.css";
-import { PagedResult, Post } from "../../types/types";
+import { Post } from "../../types/types";
 
-const PostList: React.FC = () => {
-  const [error, setError] = useState<Error | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [postList, setPostList] = useState<Post[]>([]);
+interface PostListProps {
+  posts: Post[];
+  onPostUpdated: () => void;
+}
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const result: PagedResult<Post> = await getPosts();
-        const posts: Post[] = result.items;
-        setPostList(posts);
-      } catch (error) {
-        setError(error as Error);
-      } finally {
-        setIsLoaded(true);
-      }
-    };
-
-    fetchPosts();
-  }, []);
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  } else if (!isLoaded) {
-    return <div>Loading...</div>;
-  } else if (postList.length === 0) {
-    return <div>No posts available.</div>;
-  } else {
-    return (
-      <div className="post-list">
-        {postList.map((post) => (
-          <PostItem
-            key={post.id}
-            id={post.id}
-            title={post.title}
-            text={post.text}
-            user={post.user}
-            likes={post.likes}
-            comments={post.comments || []}
-            createdAt={post.createdAt}
-          />
-        ))}
-      </div>
-    );
-  }
+const PostList: React.FC<PostListProps> = ({ posts, onPostUpdated }) => {
+  return (
+    <div className="post-list">
+      {posts.map((post) => (
+        <PostItem key={post.id} post={post} onPostUpdated={onPostUpdated} />
+      ))}
+    </div>
+  );
 };
 
 export default PostList;

@@ -3,6 +3,7 @@ import { createComment } from "../../services/commentService";
 
 interface CommentFormProps {
   postId: number;
+  onCommentSubmit: (comment: string) => void;
 }
 
 const CommentForm: React.FC<CommentFormProps> = ({ postId }) => {

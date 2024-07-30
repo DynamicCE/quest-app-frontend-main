@@ -1,20 +1,29 @@
 import React, { useState } from "react";
 import { createPost } from "../../services/postService";
-import "./PostForm.css";
+import { Post } from "../../types/types";
 
-const PostForm: React.FC = () => {
+interface PostFormProps {
+  onPostCreated: (newPost: Post) => void;
+}
+
+const PostForm: React.FC<PostFormProps> = ({ onPostCreated }) => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    await createPost({ title, text });
-    setTitle("");
-    setText("");
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const newPost = await createPost({ title, text });
+      onPostCreated(newPost);
+      setTitle("");
+      setText("");
+    } catch (error) {
+      console.error("Error creating post:", error);
+    }
   };
 
   return (
-    <form className="post-form" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <input
         type="text"
         value={title}

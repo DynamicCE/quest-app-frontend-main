@@ -34,3 +34,4 @@ export const createComment = async (commentData: {
     throw new Error(handleError(error));
   }
 };
+export {};

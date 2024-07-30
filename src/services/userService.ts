@@ -34,5 +34,8 @@ export const getUserById = async (userId: number) => {
     throw new Error(handleError(error));
   }
 };
-
+export const getUserStats = async (userId: number) => {
+  const response = await api.get(`/users/${userId}/stats`);
+  return response.data;
+};
 export {};
