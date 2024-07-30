@@ -10,7 +10,6 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Burada loglama veya hata dönüştürme işlemleri yapabilirsiniz
     console.error("API Error:", error.response || error.message);
     return Promise.reject(error);
   }

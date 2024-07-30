@@ -1,13 +1,12 @@
 .post-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  background-color: var(--surface-color);
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-  max-width: 600px;
-  margin: 20px auto;
+  gap: 15px;
+}
+
+.post-form h2 {
+  margin-bottom: 15px;
+  color: var(--primary-color);
 }
 
 .post-form input,
@@ -15,21 +14,43 @@
   width: 100%;
   padding: 10px;
   border: 1px solid var(--border-color);
-  border-radius: 4px;
-  box-sizing: border-box; /* Ek olarak box-sizing özelliği */
+  border-radius: 5px;
+  box-sizing: border-box; /* Bu satırı ekleyin */
 }
 
-.post-form button {
-  background-color: var(--primary-color);
-  color: #ffffff;
-  padding: 10px;
+.post-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.form-actions button {
+  padding: 10px 20px;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
-  font-weight: bold;
-  align-self: flex-end; /* Butonu sağa hizalama */
+  transition: background-color 0.3s ease;
 }
 
-.post-form button:hover {
+.form-actions button[type="submit"] {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.form-actions button[type="submit"]:hover {
   background-color: var(--secondary-color);
+}
+
+.form-actions button[type="button"] {
+  background-color: #f0f0f0;
+  color: var(--text-color);
+}
+
+.form-actions button[type="button"]:hover {
+  background-color: #e0e0e0;
 }

@@ -8,6 +8,10 @@ interface PostListProps {
 }
 
 const PostList: React.FC<PostListProps> = ({ posts, onPostUpdated }) => {
+  if (!posts || posts.length === 0) {
+    return <div>No posts available.</div>;
+  }
+
   return (
     <div className="post-list">
       {posts.map((post) => (
@@ -16,5 +20,4 @@ const PostList: React.FC<PostListProps> = ({ posts, onPostUpdated }) => {
     </div>
   );
 };
-
 export default PostList;
