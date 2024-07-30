@@ -10,22 +10,21 @@ export interface Comment {
   createdAt: string;
 }
 
+export interface User {
+  id: number;
+  username: string;
+  email?: string;
+  profilePicture?: string;
+  bio?: string;
+  createdAt: string;
+}
+
 export interface Post {
   id: number;
   title: string;
   text: string;
-  author: string;
-  authorProfilePic: string;
+  user: User;
   likes: number;
   comments: Comment[];
-  createdAt: string;
-}
-
-export interface User {
-  id: number;
-  username: string;
-  email: string;
-  profilePicture?: string;
-  bio?: string;
   createdAt: string;
 }

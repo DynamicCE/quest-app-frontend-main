@@ -6,16 +6,17 @@ export const getPosts = async (): Promise<Post[]> => {
   try {
     const response = await api.get("/posts");
     if (Array.isArray(response.data.data.content)) {
-      return response.data.data.content.map((post: Post) => ({
+      return response.data.data.content.map((post: any) => ({
         ...post,
+        user: post.user || { username: "Anonymous" }, // 'user' alanını kullanıyoruz
         comments: Array.isArray(post.comments) ? post.comments : [],
-        createdAt: post.createdAt || new Date().toISOString(), // Varsayılan değer eklendi
+        createdAt: post.createdAt || new Date().toISOString(),
       }));
     } else {
       throw new Error("Beklenmeyen veri formatı: Bir dizi bekleniyordu.");
     }
   } catch (error) {
-    console.log("catch çalıştı getPosts");
+    console.error("Error fetching posts:", error);
     throw new Error(handleError(error));
   }
 };

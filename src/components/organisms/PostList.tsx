@@ -13,7 +13,6 @@ const PostList: React.FC = () => {
     const fetchPosts = async () => {
       try {
         const result = await getPosts();
-        console.log(result);
         setPostList(result);
       } catch (error) {
         setError(error as Error);
@@ -34,21 +33,9 @@ const PostList: React.FC = () => {
   } else {
     return (
       <div className="post-list">
-        <ul>
-          {postList.map((post) => (
-            <PostItem
-              key={post.id}
-              id={post.id}
-              title={post.title}
-              text={post.text}
-              author={post.author}
-              authorProfilePic={post.authorProfilePic}
-              likes={post.likes}
-              comments={post.comments || []}
-              createdAt={post.createdAt} // createdAt alanını eklediğimizden emin olun
-            />
-          ))}
-        </ul>
+        {postList.map((post) => (
+          <PostItem key={post.id} {...post} />
+        ))}
       </div>
     );
   }
