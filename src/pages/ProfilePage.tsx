@@ -69,7 +69,7 @@ const ProfilePage: React.FC = () => {
           </div>
         </div>
         <h2>Posts</h2>
-        <PostList posts={posts} />
+        <PostList />
       </div>
     </div>
   );
