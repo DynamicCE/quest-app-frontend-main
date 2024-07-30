@@ -3,47 +3,74 @@ import { useParams } from "react-router-dom";
 import { getUserById } from "../services/userService";
 import { getPostsByUserId } from "../services/postService";
 import PostList from "../components/organisms/PostList";
+import Navbar from "../components/organisms/Navbar";
+import { Post, User } from "../types/types";
 import "./ProfilePage.css";
 
 const ProfilePage: React.FC = () => {
   const { userId } = useParams<{ userId: string }>();
-  const [user, setUser] = useState<any>(null);
-  const [posts, setPosts] = useState<any[]>([]);
+  const [user, setUser] = useState<User | null>(null);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
-      if (userId) {
-        const userData = await getUserById(parseInt(userId));
-        setUser(userData);
-        const userPosts = await getPostsByUserId(parseInt(userId));
-        setPosts(userPosts);
+      try {
+        if (userId) {
+          const userData = await getUserById(parseInt(userId));
+          setUser(userData);
+          const userPosts = await getPostsByUserId(parseInt(userId));
+          setPosts(userPosts);
+        }
+      } catch (err) {
+        setError("Failed to load user data");
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchUserData();
   }, [userId]);
 
+  if (isLoading) {
+    return <div className="loading">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="error">{error}</div>;
+  }
+
   if (!user) {
-    return <div>Loading...</div>;
+    return <div className="not-found">User not found</div>;
   }
 
   return (
     <div className="profile-page">
-      <div className="profile-header">
-        <img
-          src={user.profilePicture || "default-avatar.png"}
-          alt={user.username}
-          className="profile-picture"
-        />
-        <h1>{user.username}</h1>
-        <p>{user.bio}</p>
+      <Navbar />
+      <div className="profile-content">
+        <div className="profile-header">
+          <img
+            src={user.profilePicture || "/default-avatar.png"}
+            alt={user.username}
+            className="profile-picture"
+          />
+          <div className="profile-info">
+            <h1>{user.username}</h1>
+            <p className="bio">{user.bio || "No bio available"}</p>
+            <p className="join-date">
+              Joined: {new Date(user.createdAt).toLocaleDateString()}
+            </p>
+          </div>
+        </div>
+        <div className="profile-stats">
+          <div className="stat">
+            <span className="stat-value">{posts.length}</span>
+            <span className="stat-label">Posts</span>
+          </div>
+        </div>
+        <h2>Posts</h2>
+        <PostList posts={posts} />
       </div>
-      <div className="profile-stats">
-        <div>Posts: {posts.length}</div>
-        <div>Followers: {user.followers}</div>
-        <div>Following: {user.following}</div>
-      </div>
-      <h2>Posts</h2>
-      <PostList posts={posts} />
     </div>
   );
 };

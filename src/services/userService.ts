@@ -34,4 +34,5 @@ export const getUserById = async (userId: number) => {
     throw new Error(handleError(error));
   }
 };
+
 export {};

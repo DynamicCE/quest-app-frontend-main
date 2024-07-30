@@ -1,5 +1,3 @@
-// src/types/types.ts
-
 export interface Comment {
   id: number;
   text: string;
@@ -20,5 +18,14 @@ export interface Post {
   authorProfilePic: string;
   likes: number;
   comments: Comment[];
+  createdAt: string;
+}
+
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  profilePicture?: string;
+  bio?: string;
   createdAt: string;
 }
