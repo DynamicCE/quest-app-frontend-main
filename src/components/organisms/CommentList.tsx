@@ -20,7 +20,8 @@ const CommentList: React.FC<CommentListProps> = ({ comments }) => {
     <ul className="comment-list">
       {comments.map((comment) => (
         <li key={comment.id} className="comment-item">
-          {/* Yorum içeriği */}
+          <strong>{comment.author}</strong>
+          <p>{comment.content}</p>
         </li>
       ))}
     </ul>

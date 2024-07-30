@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { format } from "date-fns";
 import { likePost, sharePost, savePost } from "../../services/postService";
-import { getComments } from "../../services/commentService";
+import { getComments, createComment } from "../../services/commentService";
 import CommentForm from "../molecules/CommentForm";
 import CommentList from "../organisms/CommentList";
 import "./PostItem.css";
@@ -68,8 +68,15 @@ const PostItem: React.FC<PostItemProps> = ({ post, onPostUpdated }) => {
     }
   };
 
-  const handleCommentSubmit = (newComment: Comment) => {
-    setComments([...comments, newComment]);
+  const handleCommentSubmit = async (comment: Comment) => {
+    try {
+      await createComment({ postId: post.id, content: comment.content });
+      const updatedComments = await getComments(post.id);
+      setComments(updatedComments);
+    } catch (error) {
+      console.error("Error adding comment:", error);
+      showNotification("Yorum eklenirken bir hata oluştu.");
+    }
   };
 
   const showNotification = (message: string) => {
