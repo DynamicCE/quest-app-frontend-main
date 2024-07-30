@@ -5,12 +5,11 @@ import type { Post } from "../types/types";
 export const getPosts = async (): Promise<Post[]> => {
   try {
     const response = await api.get("/posts");
-    console.log(response.data);
     if (Array.isArray(response.data.data.content)) {
       return response.data.data.content.map((post: Post) => ({
         ...post,
         comments: Array.isArray(post.comments) ? post.comments : [],
-        createdAt: post.createdAt || new Date().toISOString(),
+        createdAt: post.createdAt || new Date().toISOString(), // Varsayılan değer eklendi
       }));
     } else {
       throw new Error("Beklenmeyen veri formatı: Bir dizi bekleniyordu.");

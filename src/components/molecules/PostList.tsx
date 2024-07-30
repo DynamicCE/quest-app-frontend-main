@@ -13,7 +13,6 @@ const PostList: React.FC = () => {
     const fetchPosts = async () => {
       try {
         const result = await getPosts();
-        console.log(result);
         setPostList(result);
       } catch (error) {
         setError(error as Error);
@@ -45,7 +44,7 @@ const PostList: React.FC = () => {
               authorProfilePic={post.authorProfilePic}
               likes={post.likes}
               comments={post.comments || []}
-              createdAt={post.createdAt} // createdAt alanını eklediğimizden emin olun
+              createdAt={post.createdAt} // Bu satırı ekleyin
             />
           ))}
         </ul>

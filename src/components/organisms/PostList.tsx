@@ -44,7 +44,8 @@ const PostList: React.FC = () => {
               author={post.author}
               authorProfilePic={post.authorProfilePic}
               likes={post.likes}
-              comments={post.comments || []} // `comments` propunu burada sağlayın
+              comments={post.comments || []}
+              createdAt={post.createdAt} // createdAt alanını eklediğimizden emin olun
             />
           ))}
         </ul>
