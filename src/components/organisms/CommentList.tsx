@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getComments } from "../../services/commentService";
 import "./CommentList.css";
-interface Comment {
-  author: string;
-  content: string;
-}
+import { Comment } from "../../types/types";
 
 interface CommentListProps {
   postId: number;
@@ -36,10 +33,18 @@ const CommentList: React.FC<CommentListProps> = ({ postId }) => {
     return <div>Loading...</div>;
   } else {
     return (
-      <ul>
-        {comments.map((comment, index) => (
-          <li key={index}>
-            <strong>{comment.author}:</strong> {comment.content}
+      <ul className="comment-list">
+        {comments.map((comment) => (
+          <li key={comment.id} className="comment-item">
+            <div className="comment-header">
+              <img
+                src={comment.profilePicture || "/default-avatar.png"}
+                alt={`${comment.author}'s profile`}
+                className="profile-pic"
+              />
+              <strong>{comment.author}</strong>
+            </div>
+            <p className="comment-content">{comment.content}</p>
           </li>
         ))}
       </ul>
@@ -48,5 +53,3 @@ const CommentList: React.FC<CommentListProps> = ({ postId }) => {
 };
 
 export default CommentList;
-
-export {};
