@@ -12,6 +12,7 @@ const HomePage: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const [postList, setPostList] = useState<Post[]>([]);
 
   useEffect(() => {
     fetchPosts();
