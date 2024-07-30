@@ -25,4 +25,13 @@ export const loginUser = async (userData: {
     throw new Error(handleError(error));
   }
 };
+
+export const getUserById = async (userId: number) => {
+  try {
+    const response = await api.get(`/users/${userId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(handleError(error));
+  }
+};
 export {};

@@ -50,3 +50,15 @@ export const updatePost = async (postData: {
     throw new Error(handleError(error));
   }
 };
+export const getPostsByUserId = async (userId: number): Promise<Post[]> => {
+  try {
+    const response = await api.get(`/users/${userId}/posts`);
+    return response.data.data.content.map((post: Post) => ({
+      ...post,
+      comments: Array.isArray(post.comments) ? post.comments : [],
+      createdAt: post.createdAt || new Date().toISOString(),
+    }));
+  } catch (error) {
+    throw new Error(handleError(error));
+  }
+};

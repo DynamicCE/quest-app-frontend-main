@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar: React.FC = () => {
+  // Burada gerçek kullanıcı ID'sini almalısınız, şimdilik sabit bir değer kullanıyoruz
+  const currentUserId = 1;
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -13,6 +16,11 @@ const Navbar: React.FC = () => {
           <li className="nav-item">
             <Link to="/" className="nav-link">
               Ana Sayfa
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to={`/profile/${currentUserId}`} className="nav-link">
+              Profil
             </Link>
           </li>
           <li className="nav-item">
