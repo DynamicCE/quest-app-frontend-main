@@ -16,8 +16,13 @@ const LoginPage: React.FC = () => {
 
     try {
       if (isLogin) {
-        await loginUser({ username, password });
-        navigate("/");
+        const result = await loginUser({ username, password });
+        if (result.success) {
+          localStorage.setItem("token", result.data);
+          navigate("/");
+        } else {
+          setError(result.message || "Login failed");
+        }
       } else {
         await registerUser({ username, password });
         setIsLogin(true);
